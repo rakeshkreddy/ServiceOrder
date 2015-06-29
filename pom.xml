@@ -56,6 +56,7 @@
         <swagger-springmvc.version>0.9.5</swagger-springmvc.version>
         <usertype-core.version>3.2.0.GA</usertype-core.version>
         <spring-boot.version>1.2.4.RELEASE</spring-boot.version>
+		<docker.image.prefix>docker</docker.image.prefix>
     </properties>
 
     <dependencies>
@@ -645,6 +646,22 @@
                     </arguments>
                 </configuration>
             </plugin>
+            <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.2.3</version>
+                        <configuration>
+                            <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                            <dockerDirectory>src/main/docker</dockerDirectory>
+                            <resources>
+                                <resource>
+                                    <targetPath></targetPath>
+                                    <directory>${project.build.directory}</directory>
+                                    <include>${project.build.finalName}.war</include>
+                                </resource>                                         
+                            </resources>
+                        </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -688,22 +705,6 @@
                             </arguments>
                         </configuration>
                     </plugin>
-                    <plugin>
-                        <groupId>com.spotify</groupId>
-                        <artifactId>docker-maven-plugin</artifactId>
-                        <version>0.2.3</version>
-                        <configuration>
-                            <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                            <dockerDirectory>src/main/docker</dockerDirectory>
-                            <resources>
-                                <resource>
-                                    <targetPath></targetPath>
-                                    <directory>${project.build.directory}</directory>
-                                    <include>${project.build.finalName}.war</include>
-                                </resource>                                         
-                            </resources>
-                        </configuration>
-                     </plugin>
                 </plugins>
             </build>
         </profile>
