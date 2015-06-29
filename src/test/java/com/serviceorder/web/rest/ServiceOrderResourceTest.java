@@ -3,6 +3,7 @@ package com.serviceorder.web.rest;
 import com.serviceorder.Application;
 import com.serviceorder.domain.ServiceOrder;
 import com.serviceorder.repository.ServiceOrderRepository;
+import com.serviceorder.web.depedency.SampleRestServiceClient;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +47,9 @@ public class ServiceOrderResourceTest {
     @Inject
     private ServiceOrderRepository serviceOrderRepository;
 
+    @Inject
+    private SampleRestServiceClient sampleRestServiceClient;
+
     private MockMvc restServiceOrderMockMvc;
 
     private ServiceOrder serviceOrder;
@@ -55,6 +59,7 @@ public class ServiceOrderResourceTest {
         MockitoAnnotations.initMocks(this);
         ServiceOrderResource serviceOrderResource = new ServiceOrderResource();
         ReflectionTestUtils.setField(serviceOrderResource, "serviceOrderRepository", serviceOrderRepository);
+        ReflectionTestUtils.setField(serviceOrderResource, "sampleRestServiceClient", sampleRestServiceClient);
         this.restServiceOrderMockMvc = MockMvcBuilders.standaloneSetup(serviceOrderResource).build();
     }
 
